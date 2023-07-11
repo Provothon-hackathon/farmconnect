@@ -2,7 +2,9 @@ package farmconnect.farmconnect.user;
 
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,12 +28,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private final String username;
+
+    public UserController(Principal principal) {
+        this.username = principal.getName();
+    }
+
     @GetMapping("/profile")
     @PreAuthorize("hasAuthority('USER')")
-    public User profile(Model model, Principal principal) {
+    public User profile() {
 
         // call api /products to get user profile
-        User user = userService.getUserByEmail(principal.getName());
+        User user = userService.getUserByEmail(username);
         return user;
         
     }
@@ -47,48 +54,53 @@ public class UserController {
 
     @PostMapping("/add-to-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String addToCart(Model model, @RequestParam String SKU, @RequestParam int page, Principal principal) {
-        return userService.addToCart(principal.getName(), SKU);
+    public String addToCart( @RequestParam String SKU) {
+        return userService.addToCart(username, SKU);
     }
 
     @PostMapping("/remove-from-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String removeFromCart(@RequestParam String sku, Model model, Principal principal) {
+    public String removeFromCart(@RequestParam String sku) {
 
-        return userService.removeFromCart(principal.getName(), sku);
+        return userService.removeFromCart(username, sku);
     }
 
     @GetMapping("/cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String cart(Model model, Principal principal) {
-        List<CartItem> cart = userService.getUserCart(principal.getName());
+    public ResponseEntity<Object> cart() {
+        List<CartItem> cart = userService.getUserCart(username);
         int total = userService.getCartTotal(cart);
-        User user = userService.getUserByEmail(principal.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("cart", cart);
-        model.addAttribute("total", total);
-        return "cart";
+        
+        //create a new json object with cart and total
+        Map<String, Object> cartAndTotal = new HashMap<>();
+        cartAndTotal.put("cart", cart);
+        cartAndTotal.put("total", total);
+        return ResponseEntity.status(HttpStatus.OK).body(cartAndTotal);
     }
 
     @GetMapping("/inc-cart-qty")
     @PreAuthorize("hasAuthority('USER')")
-    public String incCartQty(@RequestParam String sku, Model model, Principal principal) {
-        return userService.addToCart(principal.getName(), sku);
+    public String incCartQty(@RequestParam String sku) {
+        return userService.addToCart(username, sku);
     }
 
     @GetMapping("/dec-cart-qty")
     @PreAuthorize("hasAuthority('USER')")
-    public String decCartQty(@RequestParam String sku, Model model, Principal principal) {
-        return userService.updateCart(principal.getName(), sku);
+    public String decCartQty(@RequestParam String sku) {
+        return userService.updateCart(username, sku);
     }
+
+
+
 
     @PostMapping("/checkout")
     @PreAuthorize("hasAuthority('USER')")
-    public String checkout(Model model, Principal principal) {
+    public String checkout() {
 
-        return userService.check(principal.getName());
+        return userService.check(username);
 
     }
+    
 
      @GetMapping("/register")
     public ResponseEntity<String> register() {

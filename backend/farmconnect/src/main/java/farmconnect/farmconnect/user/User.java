@@ -11,6 +11,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import farmconnect.farmconnect.order.Order;
+
 @Document(collection = "users")
 public class User implements UserDetails {
     @Id
@@ -22,11 +24,12 @@ public class User implements UserDetails {
     private String role;
     private List<String> addresses;
     private List<CartItem> cart;
+    private List<Order> orders;
 
     public User() {
     }
 
-    public User(String email, String name, String password, String role, List<String> addresses, List<CartItem> cart) {
+    public User(String email, String name, String password, String role, List<String> addresses, List<CartItem> cart,List<Order> orders) {
         super();
         this.email = email;
         this.name = name;
@@ -34,10 +37,19 @@ public class User implements UserDetails {
         this.role = role;
         this.addresses = addresses;
         this.cart = cart;
+        this.orders = orders;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public String getId() {
@@ -95,7 +107,7 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User [email=" + email + ", name=" + name + ", password=" + password + ", addresses=" + addresses
-                + ", cart=" + cart + "]";
+                + ", cart=" + cart + ", orders=" + orders+"]";
     }
 
     @Override

@@ -22,6 +22,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private ProductService productService;
 
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
