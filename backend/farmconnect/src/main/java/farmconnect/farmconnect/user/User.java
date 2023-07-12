@@ -12,6 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import farmconnect.farmconnect.order.Order;
+import farmconnect.farmconnect.user.DTO.CartItemDTO;
 
 @Document(collection = "users")
 public class User implements UserDetails {
@@ -23,13 +24,13 @@ public class User implements UserDetails {
     private String password;
     private String role;
     private List<String> addresses;
-    private List<CartItem> cart;
+    private List<CartItemDTO> cart;
     private List<Order> orders;
 
     public User() {
     }
 
-    public User(String email, String name, String password, String role, List<String> addresses, List<CartItem> cart,List<Order> orders) {
+    public User(String email, String name, String password, String role, List<String> addresses, List<CartItemDTO> cart,List<Order> orders) {
         super();
         this.email = email;
         this.name = name;
@@ -96,11 +97,11 @@ public class User implements UserDetails {
         this.addresses = addresses;
     }
 
-    public List<CartItem> getCart() {
+    public List<CartItemDTO> getCart() {
         return cart;
     }
 
-    public void setCart(List<CartItem> cart) {
+    public void setCart(List<CartItemDTO> cart) {
         this.cart = cart;
     }
 

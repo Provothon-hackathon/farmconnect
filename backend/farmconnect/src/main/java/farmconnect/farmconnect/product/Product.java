@@ -48,7 +48,7 @@ public class Product {
     public String getFarmerId() {
         return farmerId;
     }
-
+ 
     public void setFarmerId(String farmerId) {
         this.farmerId = farmerId;
     }
