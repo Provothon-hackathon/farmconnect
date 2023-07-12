@@ -16,12 +16,15 @@ import AddProduct from './Pages/Farmer/AddProduct';
 import AdminOrder from './Pages/Farmer/Order';
 import UpdateProduct from './Pages/Farmer/UpdateProduct';
 import AdminOrderDetails from './Pages/Farmer/OrderDetails';
-
+import Login from './Pages/authentication/Login';
+import Signup from './Pages/authentication/Signup';
 
 function App() {
   return (
     <>
-
+      {/* Authentication */}
+      <Route  path="/login" component={Login} exact />
+      <Route  path="/signup" component={Signup} exact />
       {/* User Side */}
 
       <Route  path="/" component={UserHomePage} exact />
