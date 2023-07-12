@@ -101,13 +101,13 @@ public class UserService implements UserDetailsService {
 
         if (product != null) {
 
-            String productSKU = product.getId();
+            String prodId = product.getId();
             boolean found = false;
 
             for (CartItemDTO cartItem : cart) {
                 if (cartItem.getProduct() == null) {
                     cart.remove(cartItem);
-                } else if (cartItem.getId().equals(productSKU)) {
+                } else if (cartItem.getId().equals(prodId)) {
                     if (product.getQuantity() < cartItem.getQuantity() + 1) {
                         return "Not enough stock";
                     }
@@ -135,7 +135,7 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public String removeFromCart(String email, String sku) {
+    public String removeFromCart(String email, String id) {
         User user = userRepository.findByEmail(email);
         List<CartItemDTO> cart = user.getCart();
 
@@ -144,7 +144,7 @@ public class UserService implements UserDetailsService {
         }
 
         for (CartItemDTO cartItem : cart) {
-            if (cartItem.getId().equals(sku)) {
+            if (cartItem.getId().equals(id)) {
                 cart.remove(cartItem);
                 break;
             }

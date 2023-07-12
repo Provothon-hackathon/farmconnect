@@ -15,7 +15,11 @@ public class OrderService {
     }
 
     public Order getUserOrder(String consumerId, String id) {
-        return orderRepository.findByIdAndConsumerId(id, consumerId);
+        Order order= orderRepository.findByIdAndConsumerId(id, consumerId);
+        if(order==null){
+            throw new RuntimeException("Order not found");
+        }
+        return order;
     }
 
     public List<Order> getAdminOrders(String farmerId) {
@@ -23,6 +27,10 @@ public class OrderService {
     }
 
     public Order getAdminOrder(String farmerId, String id) {
+        Order order= orderRepository.findByIdAndFarmerId(id, farmerId);
+        if(order==null){
+            throw new RuntimeException("Order not found");
+        }
         return orderRepository.findByIdAndFarmerId(id, farmerId);
     }
 

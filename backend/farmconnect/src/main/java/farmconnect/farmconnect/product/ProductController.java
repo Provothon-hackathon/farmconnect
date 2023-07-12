@@ -3,7 +3,6 @@ package farmconnect.farmconnect.product;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +20,6 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    
     @GetMapping("/{farmerId}/products")
     @PreAuthorize("hasAuthority('USER')")
     public List<Product> getProducts(@RequestParam String farmerId) {
@@ -37,24 +35,32 @@ public class ProductController {
 
     @PostMapping("/admin/delete-product/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Object> deleteProduct(@RequestParam String id) {
+    public String deleteProduct(@RequestParam String id) {
 
         productService.deleteProduct(id);
-
-        return ResponseEntity.ok().build();
+        return "Product deleted successfully";
 
     }
 
     @GetMapping("/admin/update-product/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public Product addProduct(@PathVariable String id) {
-        return productService.getProductByID(id);
+        try {
+            return productService.getProductByID(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 
     @PostMapping("/admin/update-product")
     @PreAuthorize("hasAuthority('ADMIN')")
     public Product updateProduct(@Valid Product product) {
-        return productService.updateProduct(product);
+        try {
+            return productService.updateProduct(product);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @PostMapping("/admin/add-product")
@@ -62,9 +68,12 @@ public class ProductController {
     public Product addProduct(@Valid Product product) {
         String farmerId = productService.getUser().getId();
         product.setFarmerId(farmerId);
-        return productService.addProduct(product);
-    }
+        try {
+            return productService.addProduct(product);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
-    
+    }
 
 }

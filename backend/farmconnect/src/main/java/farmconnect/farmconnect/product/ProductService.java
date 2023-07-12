@@ -1,6 +1,5 @@
 package farmconnect.farmconnect.product;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +19,9 @@ public class ProductService {
     @Autowired
     private UserService userService;
 
-   
     @Autowired
     private LoggedInUserBean loggedInUserBean;
-    
+
     public List<Product> getProducts(String farmerId) {
         return productRepository.findByFarmerId(farmerId);
     }
@@ -40,13 +38,17 @@ public class ProductService {
     }
 
     public Product getProductByID(String id) {
-        return productRepository.findById(id).get();
+        Product prod = productRepository.findById(id).get();
+        if (prod == null) {
+            throw new RuntimeException("Product not found");
+        }
+        return prod;
     }
 
     public Product addProduct(Product product) {
 
         if (productRepository.findById(product.getId()).isPresent()) {
-            return null;
+            throw new RuntimeException("Product already exists");
         }
         return productRepository.save(product);
     }
@@ -61,7 +63,7 @@ public class ProductService {
             updatedProduct.setId(existingProduct.getId());
             return productRepository.save(updatedProduct);
         } else {
-            return null;
+             throw new RuntimeException("Product not found");
         }
     }
 
