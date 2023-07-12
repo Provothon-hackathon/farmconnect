@@ -1,28 +1,40 @@
 package farmconnect.farmconnect.product;
 
-
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "products")
 public class Product {
 
     @Id
-    private String id;
-
     @Indexed(unique = true)
-    private String SKU;
+    private String id;
+    @DBRef(db = "users")
+    private String farmerId;
     private int quantity;
     private String name;
-    private String shortDescription;
+    private String description;
     private int price;
     private List<String> categories;
     private List<String> images;
 
     public Product() {
+    }
+
+    public Product(String id, String farmerId, int quantity, String name, String description, int price,
+            List<String> categories, List<String> images) {
+        this.id = id;
+        this.farmerId = farmerId;
+        this.quantity = quantity;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.categories = categories;
+        this.images = images;
     }
 
     public String getId() {
@@ -33,12 +45,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getSKU() {
-        return SKU;
+    public String getFarmerId() {
+        return farmerId;
     }
 
-    public void setSKU(String sKU) {
-        SKU = sKU;
+    public void setFarmerId(String farmerId) {
+        this.farmerId = farmerId;
     }
 
     public int getQuantity() {
@@ -57,12 +69,12 @@ public class Product {
         this.name = name;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getPrice() {
@@ -91,11 +103,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product [id=" + id + ", SKU=" + SKU + ", quantity=" + quantity + ", name=" + name
-                + ", shortDescription=" + shortDescription + ", price=" + price + ", categories=" + categories
-                + ", images=" + images + "]";
+        return "Product [id=" + id + ", farmerId=" + farmerId + ", quantity=" + quantity + ", name=" + name
+                + ", description=" + description + ", price=" + price + ", categories=" + categories + ", images="
+                + images + "]";
     }
 
-
 }
-

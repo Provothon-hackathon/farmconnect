@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import farmconnect.farmconnect.order.Order;
 import farmconnect.farmconnect.product.Product;
 import farmconnect.farmconnect.product.ProductService;
 
@@ -21,7 +22,7 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private ProductService productService;
-
+    
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -32,6 +33,10 @@ public class UserService implements UserDetailsService {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+    
+    public String getUserId(String email) {
+        return userRepository.findByEmail(email).getId();
     }
 
     public User addUser(User user) {
@@ -79,22 +84,22 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public String addToCart(String email, String sku) {
+    public String addToCart(String email, String id) {
         User user = userRepository.findByEmail(email);
 
         List<CartItem> cart = user.getCart();
 
-        Product product = productService.getProductBySKU(sku);
+        Product product = productService.getProductByID(id);
 
         if (product != null) {
 
-            String productSKU = product.getSKU();
+            String productSKU = product.getId();
             boolean found = false;
 
             for (CartItem cartItem : cart) {
                 if (cartItem.getProduct() == null) {
                     cart.remove(cartItem);
-                } else if (cartItem.getSku().equals(productSKU)) {
+                } else if (cartItem.getId().equals(productSKU)) {
                     if (product.getQuantity() < cartItem.getQuantity() + 1) {
                         return "Not enough stock";
                     }
@@ -131,7 +136,7 @@ public class UserService implements UserDetailsService {
         }
 
         for (CartItem cartItem : cart) {
-            if (cartItem.getSku().equals(sku)) {
+            if (cartItem.getId().equals(sku)) {
                 cart.remove(cartItem);
                 break;
             }
@@ -152,7 +157,7 @@ public class UserService implements UserDetailsService {
         }
 
         for (CartItem cartItem : cart) {
-            if (cartItem.getSku().equals(sku)) {
+            if (cartItem.getId().equals(sku)) {
                 cartItem.setQuantity(cartItem.getQuantity() - 1);
                 if (cartItem.getQuantity() == 0) {
                     cart.remove(cartItem);
@@ -198,17 +203,23 @@ public class UserService implements UserDetailsService {
         return newCart;
     }
 
-    public String check(String email) {
+    public String checkout(String email) {
 
+        Order order = new Order();
+        order.setConsumerId(getUserId(email));
         List<CartItem> cart = getUserCart(email);
+        order.setSubOrders(cart);
+        order.setStatus("Confirmed");
+        Product prod = cart.get(0).getProduct();
+        order.setFarmerId(prod.getFarmerId());
 
         for (CartItem cartItem : cart) {
             Product product = cartItem.getProduct();
-            String sku = product.getSKU();
+            String id = product.getId();
             int quantity = cartItem.getQuantity();
             product.setQuantity(product.getQuantity() - quantity);
             productService.updateProduct(product);
-            removeFromCart(email, sku);
+            removeFromCart(email, id);
         }
 
         return "Checked out";

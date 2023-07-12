@@ -20,8 +20,14 @@ public class ProductService {
     @Autowired
     private UserService userService;
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    private final String username;
+
+    public ProductService(Principal principal) {
+        this.username = principal.getName();
+    }
+
+    public List<Product> getProducts(String farmerId) {
+        return productRepository.findByFarmerId(farmerId);
     }
 
     public Page<Product> getPaginatedProducts(int page, int size) {
@@ -31,30 +37,28 @@ public class ProductService {
         return products;
     }
 
-    public User getUserProfile(Principal principal) {
-        String email = principal.getName();
-
-        return userService.getUserByEmail(email);
+    public User getUser() {
+        return userService.getUserByEmail(username);
     }
 
-    public Product getProductBySKU(String sku) {
-        return productRepository.findBySKU(sku);
+    public Product getProductByID(String id) {
+        return productRepository.findById(id).get();
     }
 
     public Product addProduct(Product product) {
 
-        if (productRepository.findById(product.getSKU()).isPresent()) {
+        if (productRepository.findById(product.getId()).isPresent()) {
             return null;
         }
         return productRepository.save(product);
     }
 
-    public void deleteProduct(String sku) {
-        productRepository.deleteBySKU(sku);
+    public void deleteProduct(String id) {
+        productRepository.deleteById(id);
     }
 
     public Product updateProduct(Product updatedProduct) {
-        Product existingProduct = productRepository.findBySKU(updatedProduct.getSKU());
+        Product existingProduct = productRepository.findById(updatedProduct.getId()).get();
         if (existingProduct != null) {
             updatedProduct.setId(existingProduct.getId());
             return productRepository.save(updatedProduct);
