@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import farmconnect.farmconnect.user.CartItem;
+import farmconnect.farmconnect.user.DTO.CartItemDTO;
 
 @Document(collection = "orders")
 public class Order {
@@ -17,14 +17,14 @@ public class Order {
     private String id;
     private String consumerId;
     private String farmerId;
-    private List<CartItem> subOrders;
+    private List<CartItemDTO> subOrders;
     private String status;
     private Date date;
 
     public Order() {
     }
 
-    public Order(String id, String consumerId, String farmerId, List<CartItem> subOrders, String status, Date date) {
+    public Order(String id, String consumerId, String farmerId, List<CartItemDTO> subOrders, String status, Date date) {
         this.id = id;
         this.consumerId = consumerId;
         this.farmerId = farmerId;
@@ -57,11 +57,11 @@ public class Order {
         this.farmerId = farmerId;
     }
 
-    public List<CartItem> getSubOrders() {
+    public List<CartItemDTO> getSubOrders() {
         return subOrders;
     }
 
-    public void setSubOrders(List<CartItem> subOrders) {
+    public void setSubOrders(List<CartItemDTO> subOrders) {
         this.subOrders = subOrders;
     }
 

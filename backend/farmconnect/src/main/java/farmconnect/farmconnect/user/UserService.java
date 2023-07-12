@@ -16,6 +16,7 @@ import farmconnect.farmconnect.order.Order;
 import farmconnect.farmconnect.order.OrderService;
 import farmconnect.farmconnect.product.Product;
 import farmconnect.farmconnect.product.ProductService;
+import farmconnect.farmconnect.user.DTO.CartItemDTO;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -30,6 +31,8 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -92,7 +95,7 @@ public class UserService implements UserDetailsService {
     public String addToCart(String email, String id) {
         User user = userRepository.findByEmail(email);
 
-        List<CartItem> cart = user.getCart();
+        List<CartItemDTO> cart = user.getCart();
 
         Product product = productService.getProductByID(id);
 
@@ -101,7 +104,7 @@ public class UserService implements UserDetailsService {
             String productSKU = product.getId();
             boolean found = false;
 
-            for (CartItem cartItem : cart) {
+            for (CartItemDTO cartItem : cart) {
                 if (cartItem.getProduct() == null) {
                     cart.remove(cartItem);
                 } else if (cartItem.getId().equals(productSKU)) {
@@ -117,7 +120,7 @@ public class UserService implements UserDetailsService {
                 if (product.getQuantity() < 1) {
                     return "Not enough stock";
                 }
-                CartItem cartItem = new CartItem();
+                CartItemDTO cartItem = new CartItemDTO();
                 cartItem.setProduct(product);
                 cartItem.setQuantity(1);
                 cart.add(cartItem);
@@ -134,13 +137,13 @@ public class UserService implements UserDetailsService {
 
     public String removeFromCart(String email, String sku) {
         User user = userRepository.findByEmail(email);
-        List<CartItem> cart = user.getCart();
+        List<CartItemDTO> cart = user.getCart();
 
         if (cart == null) {
             return "Cart is empty";
         }
 
-        for (CartItem cartItem : cart) {
+        for (CartItemDTO cartItem : cart) {
             if (cartItem.getId().equals(sku)) {
                 cart.remove(cartItem);
                 break;
@@ -155,13 +158,13 @@ public class UserService implements UserDetailsService {
 
     public String updateCart(String email, String sku) {
         User user = userRepository.findByEmail(email);
-        List<CartItem> cart = user.getCart();
+        List<CartItemDTO> cart = user.getCart();
 
         if (cart == null) {
             return "Cart is empty";
         }
 
-        for (CartItem cartItem : cart) {
+        for (CartItemDTO cartItem : cart) {
             if (cartItem.getId().equals(sku)) {
                 cartItem.setQuantity(cartItem.getQuantity() - 1);
                 if (cartItem.getQuantity() == 0) {
@@ -178,9 +181,9 @@ public class UserService implements UserDetailsService {
         return "Cart updated";
     }
 
-    public List<CartItem> removeNullCartItem(List<CartItem> cart) {
-        List<CartItem> newCart = new ArrayList<>();
-        for (CartItem cartItem : cart) {
+    public List<CartItemDTO> removeNullCartItem(List<CartItemDTO> cart) {
+        List<CartItemDTO> newCart = new ArrayList<>();
+        for (CartItemDTO cartItem : cart) {
             if (cartItem.getProduct() != null) {
                 newCart.add(cartItem);
             }
@@ -188,9 +191,9 @@ public class UserService implements UserDetailsService {
         return newCart;
     }
 
-    public int getCartTotal(List<CartItem> cart) {
+    public int getCartTotal(List<CartItemDTO> cart) {
         int total = 0;
-        for (CartItem cartItem : cart) {
+        for (CartItemDTO cartItem : cart) {
             int price = 0;
             if (cartItem.getProduct() != null)
                 price = cartItem.getProduct().getPrice();
@@ -199,10 +202,10 @@ public class UserService implements UserDetailsService {
         return total;
     }
 
-    public List<CartItem> getUserCart(String email) {
+    public List<CartItemDTO> getUserCart(String email) {
         User user = userRepository.findByEmail(email);
-        List<CartItem> cart = user.getCart();
-        List<CartItem> newCart = removeNullCartItem(cart);
+        List<CartItemDTO> cart = user.getCart();
+        List<CartItemDTO> newCart = removeNullCartItem(cart);
         user.setCart(newCart);
         userRepository.save(user);
         return newCart;
@@ -212,13 +215,13 @@ public class UserService implements UserDetailsService {
 
         Order order = new Order();
         order.setConsumerId(getUserId(email));
-        List<CartItem> cart = getUserCart(email);
+        List<CartItemDTO> cart = getUserCart(email);
         order.setSubOrders(cart);
         order.setStatus("Confirmed");
         Product prod = cart.get(0).getProduct();
         order.setFarmerId(prod.getFarmerId());
 
-        for (CartItem cartItem : cart) {
+        for (CartItemDTO cartItem : cart) {
             Product product = cartItem.getProduct();
             String id = product.getId();
             int quantity = cartItem.getQuantity();
@@ -232,6 +235,8 @@ public class UserService implements UserDetailsService {
         return orderService.saveOrder(order); 
 
     }
+
+  
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

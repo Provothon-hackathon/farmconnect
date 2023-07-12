@@ -14,4 +14,5 @@ public class LoggedInUserBean {
         }
         return null;
     }
+    
 }
