@@ -23,4 +23,8 @@ public class OrderService {
     public Order getAdminOrder(String farmerId, String id) {
         return orderRepository.findByIdAndFarmerId(id, farmerId);
     }
+
+    public Order saveOrder(Order order) {
+        return orderRepository.save(order);
+    }
 }

@@ -21,6 +21,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    
     @GetMapping("/{farmerId}/products")
     @PreAuthorize("hasAuthority('USER')")
     public List<Product> getProducts(@RequestParam String farmerId) {

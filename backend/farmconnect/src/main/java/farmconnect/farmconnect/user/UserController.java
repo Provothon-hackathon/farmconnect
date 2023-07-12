@@ -1,6 +1,5 @@
 package farmconnect.farmconnect.user;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import farmconnect.farmconnect.beans.LoggedInUserBean;
+import farmconnect.farmconnect.order.Order;
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,18 +28,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private final String username;
-
-    public UserController(Principal principal) {
-        this.username = principal.getName();
-    }
+   @Autowired
+   private LoggedInUserBean loggedInUserBean;
 
     @GetMapping("/profile")
     @PreAuthorize("hasAuthority('USER')")
     public User profile() {
 
         // call api /products to get user profile
-        return userService.getUserByEmail(username);
+        return userService.getUserByEmail(loggedInUserBean.getUsername());
 
     }
 
@@ -52,21 +50,21 @@ public class UserController {
 
     @PostMapping("/add-to-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String addToCart(@RequestParam String SKU) {
-        return userService.addToCart(username, SKU);
+    public String addToCart(@RequestParam String id) {
+        return userService.addToCart(loggedInUserBean.getUsername(), id);
     }
 
     @PostMapping("/remove-from-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String removeFromCart(@RequestParam String sku) {
+    public String removeFromCart(@RequestParam String id) {
 
-        return userService.removeFromCart(username, sku);
+        return userService.removeFromCart(loggedInUserBean.getUsername(), id);
     }
 
     @GetMapping("/cart")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> cart() {
-        List<CartItem> cart = userService.getUserCart(username);
+        List<CartItem> cart = userService.getUserCart(loggedInUserBean.getUsername());
         int total = userService.getCartTotal(cart);
 
         // create a new json object with cart and total
@@ -78,21 +76,21 @@ public class UserController {
 
     @GetMapping("/inc-cart-qty")
     @PreAuthorize("hasAuthority('USER')")
-    public String incCartQty(@RequestParam String sku) {
-        return userService.addToCart(username, sku);
+    public String incCartQty(@RequestParam String id) {
+        return userService.addToCart(loggedInUserBean.getUsername(), id);
     }
 
     @GetMapping("/dec-cart-qty")
     @PreAuthorize("hasAuthority('USER')")
-    public String decCartQty(@RequestParam String sku) {
-        return userService.updateCart(username, sku);
+    public String decCartQty(@RequestParam String id) {
+        return userService.updateCart(loggedInUserBean.getUsername(), id);
     }
 
     @PostMapping("/checkout")
     @PreAuthorize("hasAuthority('USER')")
-    public String checkout() {
+    public Order checkout() {
 
-        return userService.checkout(username);
+        return userService.checkout(loggedInUserBean.getUsername());
 
     }
 
