@@ -1,7 +1,6 @@
 package farmconnect.farmconnect.product;
 
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import farmconnect.farmconnect.beans.LoggedInUserBean;
 import farmconnect.farmconnect.user.User;
 import farmconnect.farmconnect.user.UserService;
 
@@ -20,12 +20,10 @@ public class ProductService {
     @Autowired
     private UserService userService;
 
-    private final String username;
-
-    public ProductService(Principal principal) {
-        this.username = principal.getName();
-    }
-
+   
+    @Autowired
+    private LoggedInUserBean loggedInUserBean;
+    
     public List<Product> getProducts(String farmerId) {
         return productRepository.findByFarmerId(farmerId);
     }
@@ -38,7 +36,7 @@ public class ProductService {
     }
 
     public User getUser() {
-        return userService.getUserByEmail(username);
+        return userService.getUserByEmail(loggedInUserBean.getUsername());
     }
 
     public Product getProductByID(String id) {

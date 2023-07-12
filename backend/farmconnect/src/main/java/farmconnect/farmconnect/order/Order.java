@@ -1,5 +1,6 @@
 package farmconnect.farmconnect.order;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -18,12 +19,12 @@ public class Order {
     private String farmerId;
     private List<CartItem> subOrders;
     private String status;
-    private String date;
+    private Date date;
 
     public Order() {
     }
 
-    public Order(String id, String consumerId, String farmerId, List<CartItem> subOrders, String status, String date) {
+    public Order(String id, String consumerId, String farmerId, List<CartItem> subOrders, String status, Date date) {
         this.id = id;
         this.consumerId = consumerId;
         this.farmerId = farmerId;
@@ -72,11 +73,11 @@ public class Order {
         this.status = status;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

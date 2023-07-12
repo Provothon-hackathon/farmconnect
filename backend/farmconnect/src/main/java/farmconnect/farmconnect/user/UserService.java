@@ -2,6 +2,7 @@ package farmconnect.farmconnect.user;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import farmconnect.farmconnect.order.Order;
+import farmconnect.farmconnect.order.OrderService;
 import farmconnect.farmconnect.product.Product;
 import farmconnect.farmconnect.product.ProductService;
 
@@ -22,6 +24,8 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private OrderService orderService;
     
 
     @Autowired
@@ -50,6 +54,7 @@ public class UserService implements UserDetailsService {
         user.setRole("USER");
         user.setAddresses(new ArrayList<>());
         user.setCart(new ArrayList<>());
+        user.setOrders(new ArrayList<>());
 
         return userRepository.save(user);
     }
@@ -203,7 +208,7 @@ public class UserService implements UserDetailsService {
         return newCart;
     }
 
-    public String checkout(String email) {
+    public Order checkout(String email) {
 
         Order order = new Order();
         order.setConsumerId(getUserId(email));
@@ -222,7 +227,9 @@ public class UserService implements UserDetailsService {
             removeFromCart(email, id);
         }
 
-        return "Checked out";
+        order.setDate(new Date());
+
+        return orderService.saveOrder(order); 
 
     }
 
