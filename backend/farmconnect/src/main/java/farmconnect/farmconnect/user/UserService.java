@@ -54,6 +54,7 @@ public class UserService implements UserDetailsService {
         user.setRole("USER");
         user.setAddresses(new ArrayList<>());
         user.setCart(new ArrayList<>());
+        user.setOrders(new ArrayList<>());
 
         return userRepository.save(user);
     }
