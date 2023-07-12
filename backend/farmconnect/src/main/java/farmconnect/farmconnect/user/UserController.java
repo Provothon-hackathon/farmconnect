@@ -1,6 +1,5 @@
 package farmconnect.farmconnect.user;
 
-
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -39,9 +38,8 @@ public class UserController {
     public User profile() {
 
         // call api /products to get user profile
-        User user = userService.getUserByEmail(username);
-        return user;
-        
+        return userService.getUserByEmail(username);
+
     }
 
     @PostMapping("/profile")
@@ -54,7 +52,7 @@ public class UserController {
 
     @PostMapping("/add-to-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String addToCart( @RequestParam String SKU) {
+    public String addToCart(@RequestParam String SKU) {
         return userService.addToCart(username, SKU);
     }
 
@@ -70,8 +68,8 @@ public class UserController {
     public ResponseEntity<Object> cart() {
         List<CartItem> cart = userService.getUserCart(username);
         int total = userService.getCartTotal(cart);
-        
-        //create a new json object with cart and total
+
+        // create a new json object with cart and total
         Map<String, Object> cartAndTotal = new HashMap<>();
         cartAndTotal.put("cart", cart);
         cartAndTotal.put("total", total);
@@ -90,31 +88,15 @@ public class UserController {
         return userService.updateCart(username, sku);
     }
 
-
-
-
     @PostMapping("/checkout")
     @PreAuthorize("hasAuthority('USER')")
     public String checkout() {
 
-        return userService.check(username);
+        return userService.checkout(username);
 
     }
-    
 
-     @GetMapping("/register")
-    public ResponseEntity<String> register() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.isAuthenticated()) {
-            // If the user is already authenticated, return an appropriate response
-            return ResponseEntity.status(HttpStatus.OK).body("User is already authenticated");
-        } else {
-            // If the user is not authenticated, return a response indicating that they can proceed with registration
-            return ResponseEntity.status(HttpStatus.OK).body("Proceed with registration");
-        }
-    }
-
- @PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.isAuthenticated()) {
@@ -128,5 +110,3 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body("Registration successful");
     }
 }
-
-

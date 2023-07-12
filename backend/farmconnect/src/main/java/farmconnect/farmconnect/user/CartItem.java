@@ -42,13 +42,13 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public String getSku() {
+    public String getId() {
 
         if (this.product == null) {
             return null;
         }
 
-        return this.product.getSKU();
+        return this.product.getId();
     }
 
     @Override
