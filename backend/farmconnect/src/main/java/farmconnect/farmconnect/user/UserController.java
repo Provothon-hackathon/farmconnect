@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +57,7 @@ public class UserController {
     }
     @GetMapping("/farmers/{id}")
     @PreAuthorize("hasAuthority('USER')")
-    public User getFarmer(@RequestParam String id) {
+    public User getFarmer(@PathVariable String id) {
 
         // call api /products to get user profile
         return userService.getFarmer(id);
