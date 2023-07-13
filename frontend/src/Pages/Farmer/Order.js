@@ -1,6 +1,7 @@
 import React from 'react'
-import Navbar from '../../components/Navbar'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min'
+import Navbar from '../../components/Navbar'
+import "../../css/backupstyle.css"
 
 
 const Order = () => {
