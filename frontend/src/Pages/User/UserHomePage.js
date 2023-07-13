@@ -2,12 +2,14 @@ import React from 'react'
 import Navbar from '../../components/Navbar'
 import FarmerCard from '../../components/FarmerCard'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { useEffect,useState } from 'react'
 
-import { useEffect, useLocation } from 'react'
+import axios from 'axios'
 
 const UserHomePage = () => {
 
   const history = useHistory()
+  const [farmer, setFarmer] = useState([])
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -21,20 +23,50 @@ const UserHomePage = () => {
       if (userInfo.role === "ADMIN" && !history.location.pathname.includes('admin')) {
         history.push('/admin')
       }
+      getFarmers(userInfo)
+    } else {
+      history.push('/login')
     }
+
   }, [])
+
+
+  const getFarmers = async (user) => {
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
+    }
+
+    try {
+      const { data } = await axios.get('/farmers', config)
+      // console.log(data)
+      setFarmer(data)
+    } catch (error) {
+      alert('error')
+      console.log(error)
+    }
+  }
+
+
+
+
 
 
   return (
     <>
       <Navbar searchBar={true} admin={false} />
       <div className="container d-flex justify-content-center align-items-center flex-wrap mt-5 py-5">
-        <FarmerCard />
-        <FarmerCard />
-        <FarmerCard />
-        <FarmerCard />
-        <FarmerCard />
-        <FarmerCard />
+
+        {farmer.length===0 && <h1>No Farmer</h1>}
+
+        {farmer.length>0 &&
+        
+          farmer.map((f)=>{
+            return <FarmerCard key={f.id} farmer={f} />
+          })
+        }
 
       </div>
     </>
