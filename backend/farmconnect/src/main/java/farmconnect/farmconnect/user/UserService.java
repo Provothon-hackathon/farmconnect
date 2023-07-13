@@ -99,7 +99,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public List<CartItemDTO> addToCart(String email, String id) {
+    public String addToCart(String email, String id) {
         User user = userRepository.findByEmail(email);
 
         List<CartItemDTO> cart = user.getCart();
@@ -116,7 +116,7 @@ public class UserService implements UserDetailsService {
                     cart.remove(cartItem);
                 } else if (cartItem.getId().equals(prodId)) {
                     if (product.getQuantity() < cartItem.getQuantity() + 1) {
-                        throw new RuntimeException("Not enough stock");
+                        return "Not enough stock";
                     }
                     cartItem.setQuantity(cartItem.getQuantity() + 1);
                     found = true;
@@ -125,7 +125,7 @@ public class UserService implements UserDetailsService {
             }
             if (!found) {
                 if (product.getQuantity() < 1) {
-                    throw new RuntimeException("Not enough stock");
+                    return "Not enough stock";
                 }
                 CartItemDTO cartItem = new CartItemDTO();
                 cartItem.setProduct(product);
@@ -134,20 +134,20 @@ public class UserService implements UserDetailsService {
             }
             user.setCart(cart);
             this.updateUser(user);
-            return getUserCart(email);
+            return "Added to cart";
 
         }
 
-        throw new RuntimeException("Product not found");
+        return "Product not found";
 
     }
 
-    public List<CartItemDTO> removeFromCart(String email, String id) {
+    public String removeFromCart(String email, String id) {
         User user = userRepository.findByEmail(email);
         List<CartItemDTO> cart = user.getCart();
 
         if (cart == null) {
-           throw new RuntimeException("Cart is empty");
+            return "Cart is empty";
         }
 
         for (CartItemDTO cartItem : cart) {
@@ -159,16 +159,16 @@ public class UserService implements UserDetailsService {
 
         user.setCart(cart);
         userRepository.save(user);
-        return getUserCart(email);
+        return "Removed from cart";
 
     }
 
-    public List<CartItemDTO> updateCart(String email, String sku) {
+    public String updateCart(String email, String sku) {
         User user = userRepository.findByEmail(email);
         List<CartItemDTO> cart = user.getCart();
 
         if (cart == null) {
-            throw new RuntimeException("Cart is empty");
+            return "Cart is empty";
         }
 
         for (CartItemDTO cartItem : cart) {
@@ -185,7 +185,7 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
 
-        return getUserCart(email);
+        return "Cart updated";
     }
 
     public List<CartItemDTO> removeNullCartItem(List<CartItemDTO> cart) {
