@@ -9,9 +9,10 @@ import axios from 'axios'
 
 const FarmerDetails = () => {
 
-  const history = useHistory()
   const { farmerId } = useParams()
   const [products, setProducts] = useState([])
+  const [user, setUser] = useState(null)
+  const history = useHistory()
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -23,6 +24,7 @@ const FarmerDetails = () => {
       if (userInfo.role === "ADMIN" && !history.location.pathname.includes('admin')) {
         history.push('/admin')
       }
+      setUser(userInfo)
       getProducts(userInfo)
     } else {
       history.push('/login')
@@ -43,7 +45,6 @@ const FarmerDetails = () => {
     try {
       const url = `/${farmerId}/products`
       const { data } = await axios.get(url, config)
-      console.log(data)
       setProducts(data)
     } catch (error) {
       alert('error')
@@ -77,7 +78,7 @@ const FarmerDetails = () => {
         {products.length>0 && 
         
           products.map((p)=>{
-            return <ProductCard key={p.id} product={p}/>
+            return <ProductCard user={user} key={p.id} product={p}/>
           })
         
         }
