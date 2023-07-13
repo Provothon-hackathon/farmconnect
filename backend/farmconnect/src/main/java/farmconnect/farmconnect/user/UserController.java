@@ -64,15 +64,22 @@ public class UserController {
 
     @PostMapping("/add-to-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String addToCart(@RequestParam(value = "id") String id) {
+    public List<CartItemDTO> addToCart(@RequestParam(value = "id") String id) {
         return userService.addToCart(loggedInUserBean.getUsername(), id);
     }
 
     @PostMapping("/remove-from-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String removeFromCart(@RequestParam(value = "id") String id) {
+    public ResponseEntity<Object> removeFromCart(@RequestParam(value = "id") String id) {
 
-        return userService.removeFromCart(loggedInUserBean.getUsername(), id);
+       List<CartItemDTO> cart = userService.removeFromCart(loggedInUserBean.getUsername(), id);
+        int total = userService.getCartTotal(cart);
+
+        // create a new json object with cart and total
+        Map<String, Object> cartAndTotal = new HashMap<>();
+        cartAndTotal.put("cart", cart);
+        cartAndTotal.put("total", total);
+        return ResponseEntity.status(HttpStatus.OK).body(cartAndTotal);
     }
 
     @GetMapping("/cart")
@@ -90,14 +97,25 @@ public class UserController {
 
     @GetMapping("/inc-cart-qty")
     @PreAuthorize("hasAuthority('USER')")
-    public String incCartQty(@RequestParam(value = "id") String id) {
-        return userService.addToCart(loggedInUserBean.getUsername(), id);
+    public ResponseEntity<Object> incCartQty(@RequestParam(value = "id") String id) {
+        List<CartItemDTO> cart = userService.addToCart(loggedInUserBean.getUsername(), id);
+        int total = userService.getCartTotal(cart);
+         Map<String, Object> cartAndTotal = new HashMap<>();
+        cartAndTotal.put("cart", cart);
+        cartAndTotal.put("total", total);
+        return ResponseEntity.status(HttpStatus.OK).body(cartAndTotal);
+
     }
 
     @GetMapping("/dec-cart-qty")
     @PreAuthorize("hasAuthority('USER')")
-    public String decCartQty(@RequestParam(value = "id") String id) {
-        return userService.updateCart(loggedInUserBean.getUsername(), id);
+    public ResponseEntity<Object> decCartQty(@RequestParam(value = "id") String id) {
+        List<CartItemDTO> cart = userService.updateCart(loggedInUserBean.getUsername(), id);
+        int total = userService.getCartTotal(cart);
+         Map<String, Object> cartAndTotal = new HashMap<>();
+        cartAndTotal.put("cart", cart);
+        cartAndTotal.put("total", total);
+        return ResponseEntity.status(HttpStatus.OK).body(cartAndTotal);
     }
 
     @PostMapping("/checkout")
