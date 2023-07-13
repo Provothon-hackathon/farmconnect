@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
+import {isEmail} from 'validator'
+import axios from 'axios'
 
 
 const Signup = () => {
@@ -29,7 +31,31 @@ const Signup = () => {
    }
    
    
-   const handleSubmit = ()=>{
+   const handleSubmit = async ()=>{
+
+      if(!name || !isEmail(email) || !password){
+         alert("Inavalid Data")
+         return
+      }
+
+      const data = {
+         email : email,
+         name : name,
+         password : password,
+         role : role
+      }
+      const config = {
+         headers: {
+             "Content-type": "application/json",
+         }
+     }
+      try {
+         const { data } = axios.post('/register',{name,email,password,role},config)
+         console.log(data)
+      } catch (error) {
+         console.log(error)
+         alert('error')
+      }
 
    }
 
@@ -58,7 +84,7 @@ const Signup = () => {
                      </div>
                      <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" value={password} onChange={(e)=>setName(e.target.value)} 
+                        <input type="password" class="form-control" value={password} onChange={(e)=>setPassword(e.target.value)} 
                         placeholder="Password" />
                      </div>
                      <div class="form-group">
