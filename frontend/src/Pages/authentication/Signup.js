@@ -22,7 +22,14 @@ const Signup = () => {
    //  }
 
    useEffect(() => {
-
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      if (userInfo) {
+         if(userInfo.role==="USER"){
+            history.push('/')
+         }else{
+            history.push('/admin')
+         }
+      }
    }, [])
 
 

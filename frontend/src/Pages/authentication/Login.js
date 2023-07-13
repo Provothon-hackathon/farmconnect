@@ -10,7 +10,14 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 const Login = () => {
 
    useEffect(() => {
-
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      if (userInfo) {
+         if(userInfo.role==="USER"){
+            history.push('/')
+         }else{
+            history.push('/admin')
+         }
+      }
    }, [])
 
    const [username, setUserName] = useState("")
