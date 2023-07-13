@@ -1,27 +1,26 @@
 import React from 'react'
-import Navbar from '../../components/Navbar'
+import CartHeading from '../../components/CartHeading'
 import CheckoutCard from '../../components/CheckoutCard'
+import Navbar from '../../components/Navbar'
 
 const Cart = () => {
   return (
     <>
-      <Navbar searchBar={false} admin={false}/>
-      <div className='container mt-5'>
-        <div className="card">
-          <h5 class="card-header">CheckOut</h5>
-          <div className="card-body">
-            <h5 className="card-title">Total</h5>
-            <p className="card-text">6000</p>
-            <button href="#" className="btn btn-primary">Place Order</button>
-          </div>
+      <Navbar searchBar={false} admin={false} />
+      <CartHeading />
+        
+      <div class="container">
+      <div class="cart-container">
+        <div class="cart-cards">
+
+          <CheckoutCard />
+          <CheckoutCard />
+          <CheckoutCard />
+          <CheckoutCard />
         </div>
-      <div className='container mt-5' >
-          <CheckoutCard />
-          <CheckoutCard />
-          <CheckoutCard />
-          <CheckoutCard />
       </div>
-      </div>
+    </div>
+      
     </>
   )
 }
