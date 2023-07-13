@@ -28,7 +28,6 @@ const ProductCard = ({ product, user }) => {
     }
 
     const image = product.images.length > 0 ? product.images[0] : ''
-    console.log(product)
     return (
         <div className="card m-2 bg-light" style={{ width: "18rem" }}>
             <img src={image} className="card-img-top" alt="..." />
@@ -50,7 +49,7 @@ const ProductCard = ({ product, user }) => {
                 <div>
 
                     {product.categories.length > 0 && product.categories.map((cat,i) => {
-                        return <span key={i} class="badge rounded-pill m- px-3 py-2 text-bg-secondary">{cat}</span>
+                        return <span key={i} className="badge rounded-pill m- px-3 py-2 text-bg-secondary">{cat}</span>
 
                     })}
                 </div>

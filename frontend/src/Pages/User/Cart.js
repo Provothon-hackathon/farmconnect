@@ -3,7 +3,7 @@ import CartHeading from '../../components/CartHeading'
 import CheckoutCard from '../../components/CheckoutCard'
 import Navbar from '../../components/Navbar'
 
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
 import axios from 'axios'
 
 const Cart = () => {
@@ -48,6 +48,22 @@ const Cart = () => {
 
   }
 
+  const upadteCart = async ()=>{
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
+    }
+
+    try {
+      const url = "/cart"
+      const { data } = await axios.get(url, config)
+      setCart(data)
+    } catch (error) {
+      alert('error')
+      console.log(error)
+    }
+  }
 
 
 
@@ -55,7 +71,7 @@ const Cart = () => {
     <>
       <Navbar searchBar={false} admin={false} />
       {cart &&
-        <CartHeading total={cart.total} />
+        <CartHeading user={user} total={cart.total} />
       }
 
       <div class="container">
@@ -63,7 +79,7 @@ const Cart = () => {
           <div class="cart-cards">
             {!cart && <h1>Cart is Empty</h1>}
             {cart && cart.cart && cart.cart.map((c)=>{
-              return <CheckoutCard user={user} key={c.id} cart={c} />
+              return <CheckoutCard upadteCart={setCart} user={user} key={c.id} cart={c} />
             })}
           </div>
         </div>

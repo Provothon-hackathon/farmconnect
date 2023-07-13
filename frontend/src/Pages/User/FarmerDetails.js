@@ -12,6 +12,7 @@ const FarmerDetails = () => {
   const { farmerId } = useParams()
   const [products, setProducts] = useState([])
   const [user, setUser] = useState(null)
+  const [farmer, setFarmer] = useState("")
   const history = useHistory()
 
   useEffect(() => {
@@ -26,12 +27,30 @@ const FarmerDetails = () => {
       }
       setUser(userInfo)
       getProducts(userInfo)
+      getFarmer(userInfo)
     } else {
       history.push('/login')
     }
 
   }, [])
 
+  const getFarmer = async (user) => {
+    // const config = {
+    //   headers: {
+    //     Authorization: `Bearer ${user.token}`
+    //   }
+    // }
+
+    // try {
+    //   const url = `/farmers/${farmerId}`
+    //   const { data } = await axios.get(url, config)
+    //   console.log(data)
+    //   setFarmer(data)
+    // } catch (error) {
+    //   alert(error)
+    //   console.log(error)
+    // }
+  }
 
   const getProducts = async (user) => {
 
@@ -74,13 +93,13 @@ const FarmerDetails = () => {
       </div>
 
       <div className="container d-flex justify-content-center align-items-center flex-wrap mt-5">
-        {products.length===0 && <h1>No Product</h1>}
-        {products.length>0 && 
-        
-          products.map((p)=>{
-            return <ProductCard user={user} key={p.id} product={p}/>
+        {products.length === 0 && <h1>No Product</h1>}
+        {products.length > 0 &&
+
+          products.map((p) => {
+            return <ProductCard user={user} key={p.id} product={p} />
           })
-        
+
         }
       </div>
     </>

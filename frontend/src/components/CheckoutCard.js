@@ -3,35 +3,71 @@ import { useState } from 'react'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-const CheckoutCard = ({cart,user}) => {
+const CheckoutCard = ({ cart, user, upadteCart }) => {
 
     const [productCount, setProductCount] = useState(cart.quantity);
+    const [loading, setLoading] = useState(false)
     const history = useHistory()
 
     const increment = async () => {
         const config = {
             headers: {
-              Authorization: `Bearer ${user.token}`
+                Authorization: `Bearer ${user.token}`
             }
-          }
-          try {
+        }
+        setLoading(true)
+        try {
             const url = `/inc-cart-qty?id=${cart.id}`
             const { data } = await axios.get(url, config)
             console.log(data)
-            history.push('/cart')
-          } catch (error) {
+            history.push('/trash')
+        } catch (error) {
             alert('error')
             console.log(error)
-          }
-    }
-
-    const decrement = () => {
-        if (+productCount > 1) {
-            const newCount = +productCount - 1
-            setProductCount(+newCount)
+        } finally {
+            setLoading(false)
         }
     }
-    const image = cart.product.images.length>0?cart.product.images[0]:''
+
+    const decrement = async () => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        setLoading(true)
+        try {
+            const url = `/dec-cart-qty?id=${cart.id}`
+            const { data } = await axios.get(url, config)
+            history.push('/trash')
+        } catch (error) {
+            alert('error')
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const handleRemove = async () => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        setLoading(true)
+        try {
+            const url = `/remove-from-cart?id=${cart.id}`
+            const { data } = await axios.get(url, config)
+            history.push('/trash')
+        } catch (error) {
+            alert('error')
+            console.log(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const image = cart.product.images.length > 0 ? cart.product.images[0] : ''
     console.log(cart)
 
     return (
@@ -77,7 +113,7 @@ const CheckoutCard = ({cart,user}) => {
                                     <input
                                         type="button"
                                         className="btn btn-outline"
-                                        style={{ borderTop: "1px solid black", borderBottom: "1px solid black",cursor:"auto" }}
+                                        style={{ borderTop: "1px solid black", borderBottom: "1px solid black", cursor: "auto" }}
                                         aria-readonly="true"
                                         value={productCount}
                                     />
@@ -85,6 +121,7 @@ const CheckoutCard = ({cart,user}) => {
                                         type="button"
                                         className="btn btn-outline-primary"
                                         onClick={increment}
+                                        loading={loading}
                                     >+
                                     </button>
                                 </div>
@@ -105,10 +142,10 @@ const CheckoutCard = ({cart,user}) => {
                                 type="hidden"
                                 name="sku"
                             />
-                            <button type="submit" className="btn btn-danger">
-                                Remove from cart
-                            </button>
                         </form>
+                        <button onClick={handleRemove} type="submit" className="btn btn-danger">
+                            Remove from cart
+                        </button>
                     </div>
                 </div>
             </div>

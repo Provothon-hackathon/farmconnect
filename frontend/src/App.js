@@ -18,6 +18,7 @@ import UpdateProduct from './Pages/Farmer/UpdateProduct';
 import AdminOrderDetails from './Pages/Farmer/OrderDetails';
 import Login from './Pages/authentication/Login';
 import Signup from './Pages/authentication/Signup';
+import Trash from './Pages/User/Trash';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
       {/* Authentication */}
       <Route  path="/login" component={Login} exact />
       <Route  path="/signup" component={Signup} exact />
+      <Route  path="/trash" component={Trash} exact />
       {/* User Side */}
 
       <Route  path="/" component={UserHomePage} exact />
