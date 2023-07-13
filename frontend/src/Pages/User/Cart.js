@@ -10,6 +10,7 @@ const Cart = () => {
 
   const history = useHistory()
   const [cart, setCart] = useState([])
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
@@ -21,6 +22,7 @@ const Cart = () => {
       if (userInfo.role === "ADMIN" && !history.location.pathname.includes('admin')) {
         history.push('/admin')
       }
+      setUser(userInfo)
       getCart(userInfo)
     } else {
       history.push('/login')
@@ -36,9 +38,8 @@ const Cart = () => {
     }
 
     try {
-      const url ="/cart"
+      const url = "/cart"
       const { data } = await axios.get(url, config)
-      console.log(data)
       setCart(data)
     } catch (error) {
       alert('error')
@@ -53,16 +54,17 @@ const Cart = () => {
   return (
     <>
       <Navbar searchBar={false} admin={false} />
-      <CartHeading />
+      {cart &&
+        <CartHeading total={cart.total} />
+      }
 
       <div class="container">
         <div class="cart-container">
           <div class="cart-cards">
-
-            <CheckoutCard />
-            <CheckoutCard />
-            <CheckoutCard />
-            <CheckoutCard />
+            {!cart && <h1>Cart is Empty</h1>}
+            {cart && cart.cart && cart.cart.map((c)=>{
+              return <CheckoutCard user={user} key={c.id} cart={c} />
+            })}
           </div>
         </div>
       </div>

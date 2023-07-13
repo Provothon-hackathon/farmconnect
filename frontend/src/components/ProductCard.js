@@ -14,8 +14,8 @@ const ProductCard = ({ product, user }) => {
             }
         }
         try {
-            const url = '/add-to-cart'
-            const { data } = await axios.post(url, { id: product.id }, config)
+            const url = `/add-to-cart?id=${product.id}`
+            const { data } = await axios.post(url, {  }, config)
             alert("Success")
         } catch (error) {
             alert('error')
