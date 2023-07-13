@@ -13,7 +13,7 @@ public class Product {
     @Id
     @Indexed(unique = true)
     private String id;
-    @DBRef(db = "users")
+    // @DBRef(db = "users")
     private String farmerId;
     private int quantity;
     private String name;

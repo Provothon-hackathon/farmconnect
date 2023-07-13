@@ -73,16 +73,14 @@ const FarmerDetails = () => {
       </div>
 
       <div className="container d-flex justify-content-center align-items-center flex-wrap mt-5">
-
-
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {products.length===0 && <h1>No Product</h1>}
+        {products.length>0 && 
+        
+          products.map((p)=>{
+            return <ProductCard key={p.id} product={p}/>
+          })
+        
+        }
       </div>
     </>
 
