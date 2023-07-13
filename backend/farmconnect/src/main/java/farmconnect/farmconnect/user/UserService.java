@@ -38,6 +38,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public List<User> getFarmers() {
+        return userRepository.findByRole("ADMIN");
+    }
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }

@@ -47,6 +47,14 @@ public class UserController {
         return userService.updateProfile(email, name, address);
     }
 
+    @GetMapping("/farmers")
+    @PreAuthorize("hasAuthority('USER')")
+    public List<User> getFarmers() {
+
+        // call api /products to get user profile
+        return userService.getFarmers();
+    }
+
     @PostMapping("/add-to-cart")
     @PreAuthorize("hasAuthority('USER')")
     public String addToCart(@RequestParam String id) {
