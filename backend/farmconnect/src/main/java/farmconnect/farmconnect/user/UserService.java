@@ -54,7 +54,6 @@ public class UserService implements UserDetailsService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        user.setRole("USER");
         user.setAddresses(new ArrayList<>());
         user.setCart(new ArrayList<>());
         user.setOrders(new ArrayList<>());
@@ -236,6 +235,10 @@ public class UserService implements UserDetailsService {
 
     }
 
+    public String getRoleBYUsername(String username){
+        User user = userRepository.findByEmail(username);
+        return user.getRole();
+    }
   
 
     @Override
