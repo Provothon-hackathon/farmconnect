@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -22,7 +21,7 @@ public class ProductController {
 
     @GetMapping("/{farmerId}/products")
     @PreAuthorize("hasAuthority('USER')")
-    public List<Product> getProducts(@RequestParam String farmerId) {
+    public List<Product> getProducts(@PathVariable String farmerId) {
         return productService.getProducts(farmerId);
     }
 
@@ -35,7 +34,7 @@ public class ProductController {
 
     @PostMapping("/admin/delete-product/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String deleteProduct(@RequestParam String id) {
+    public String deleteProduct(@PathVariable String id) {
 
         productService.deleteProduct(id);
         return "Product deleted successfully";
