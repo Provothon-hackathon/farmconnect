@@ -4,16 +4,17 @@ import ProductCard from '../../components/ProductCard'
 
 import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 const FarmerDetails = () => {
 
   const history = useHistory()
+  const { farmerId } = useParams()
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    console.log(history.location.pathname)
-    console.log("MMM")
     if (userInfo) {
       if (userInfo.role === "USER" && history.location.pathname.includes('admin')) {
         history.push('/')
@@ -22,11 +23,34 @@ const FarmerDetails = () => {
       if (userInfo.role === "ADMIN" && !history.location.pathname.includes('admin')) {
         history.push('/admin')
       }
+      getProducts(userInfo)
     } else {
       history.push('/login')
     }
 
   }, [])
+
+
+  const getProducts = async (user) => {
+
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
+    }
+
+    try {
+      const url = `/${farmerId}/products`
+      const { data } = await axios.get(url, config)
+      console.log(data)
+      setProducts(data)
+    } catch (error) {
+      alert('error')
+      console.log(error)
+    }
+
+  }
 
 
   return (

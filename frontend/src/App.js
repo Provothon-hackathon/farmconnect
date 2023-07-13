@@ -28,7 +28,7 @@ function App() {
       {/* User Side */}
 
       <Route  path="/" component={UserHomePage} exact />
-      <Route  path="/farmer/:farmerID" component={FarmerDetails} exact />
+      <Route  path="/farmer/:farmerId" component={FarmerDetails} exact />
       <Route  path="/cart" component={Cart} exact />
       <Route  path="/profile" component={Profile} exact />
       <Route  path="/orders" component={Order} exact />
