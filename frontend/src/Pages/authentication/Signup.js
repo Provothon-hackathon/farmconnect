@@ -15,7 +15,6 @@ const Signup = () => {
    const history = useHistory()
 
    // {
-
    //    "email": "aditya@gmail.com",
    //    "name": "Aditya",
    //    "password": "aditya14",
@@ -39,12 +38,6 @@ const Signup = () => {
          return
       }
 
-      const data = {
-         email : email,
-         name : name,
-         password : password,
-         role : role
-      }
       const config = {
          headers: {
              "Content-type": "application/json",
