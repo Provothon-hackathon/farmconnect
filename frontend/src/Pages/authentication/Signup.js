@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import {isEmail} from 'validator'
 import axios from 'axios'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 
 const Signup = () => {
@@ -11,7 +12,7 @@ const Signup = () => {
    const [email, setEmail] = useState("")
    const [password, setPassword] = useState("")
    const [role, setRole] = useState("USER")
-
+   const history = useHistory()
 
    // {
 
@@ -50,8 +51,9 @@ const Signup = () => {
          }
      }
       try {
-         const { data } = axios.post('/register',{name,email,password,role},config)
+         const  {data}  = await axios.post('/register',{name,email,password,role},config)
          console.log(data)
+         history.push('/login')
       } catch (error) {
          console.log(error)
          alert('error')
