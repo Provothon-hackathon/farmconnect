@@ -1,21 +1,21 @@
-package farmconnect.farmconnect.user;
+package farmconnect.farmconnect.user.DTO;
 
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import farmconnect.farmconnect.product.Product;
 
-public class CartItem {
+public class CartItemDTO {
 
     @DBRef
     private Product product;
 
     private int quantity;
 
-    public CartItem() {
+    public CartItemDTO() {
     }
 
-    public CartItem(Product product, int quantity) {
+    public CartItemDTO(Product product, int quantity) {
         super();
         this.product = product;
         this.quantity = quantity;

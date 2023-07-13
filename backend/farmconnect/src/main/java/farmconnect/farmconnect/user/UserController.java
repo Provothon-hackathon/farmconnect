@@ -8,27 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import farmconnect.farmconnect.beans.LoggedInUserBean;
 import farmconnect.farmconnect.order.Order;
+import farmconnect.farmconnect.user.DTO.CartItemDTO;
 import jakarta.validation.Valid;
 
-@Controller
+@RestController
 @SessionAttributes({ "username" })
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-   @Autowired
-   private LoggedInUserBean loggedInUserBean;
-
+    @Autowired
+    private LoggedInUserBean loggedInUserBean;
 
     @GetMapping("/profile")
     @PreAuthorize("hasAuthority('USER')")
@@ -47,6 +47,14 @@ public class UserController {
         return userService.updateProfile(email, name, address);
     }
 
+    @GetMapping("/farmers")
+    @PreAuthorize("hasAuthority('USER')")
+    public List<User> getFarmers() {
+
+        // call api /products to get user profile
+        return userService.getFarmers();
+    }
+
     @PostMapping("/add-to-cart")
     @PreAuthorize("hasAuthority('USER')")
     public String addToCart(@RequestParam String id) {
@@ -63,7 +71,7 @@ public class UserController {
     @GetMapping("/cart")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> cart() {
-        List<CartItem> cart = userService.getUserCart(loggedInUserBean.getUsername());
+        List<CartItemDTO> cart = userService.getUserCart(loggedInUserBean.getUsername());
         int total = userService.getCartTotal(cart);
 
         // create a new json object with cart and total
@@ -95,10 +103,16 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody User user) {
-        
-        userService.addUser(user);
 
-        // Return a success response after successful registration
-        return ResponseEntity.status(HttpStatus.OK).body("Registration successful");
+        try{
+            userService.addUser(user);
+            // Return a success response after successful registration
+            return ResponseEntity.status(HttpStatus.OK).body("Registration successful");
+        }
+        catch(Exception e){
+            // Return a failure response after unsuccessful registration
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
+        }
     }
+
 }

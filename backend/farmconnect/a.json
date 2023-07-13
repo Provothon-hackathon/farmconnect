@@ -1,0 +1,102 @@
+[
+    {
+      "farmerId": "farmer123",
+      "quantity": 10,
+      "name": "Product 1",
+      "description": "This is product 1",
+      "price": 100,
+      "categories": ["Category A"],
+      "images": ["Image1.jpg", "Image2.jpg"]
+    },
+    {
+  
+      "farmerId": "farmer456",
+      "quantity": 5,
+      "name": "Product 2",
+      "description": "This is product 2",
+      "price": 50,
+      "categories": ["Category B"],
+      "images": ["Image3.jpg", "Image4.jpg"]
+    },
+    {
+
+      "farmerId": "farmer789",
+      "quantity": 8,
+      "name": "Product 3",
+      "description": "This is product 3",
+      "price": 80,
+      "categories": ["Category A"],
+      "images": ["Image5.jpg", "Image6.jpg"]
+    },
+    {
+
+      "farmerId": "farmer321",
+      "quantity": 3,
+      "name": "Product 4",
+      "description": "This is product 4",
+      "price": 120,
+      "categories": ["Category C"],
+      "images": ["Image7.jpg", "Image8.jpg"]
+    },
+    {
+    
+      "farmerId": "farmer654",
+      "quantity": 12,
+      "name": "Product 5",
+      "description": "This is product 5",
+      "price": 70,
+      "categories": ["Category A", "Category B"],
+      "images": ["Image9.jpg", "Image10.jpg"]
+    },
+    {
+    
+      "farmerId": "farmer987",
+      "quantity": 6,
+      "name": "Product 6",
+      "description": "This is product 6",
+      "price": 90,
+      "categories": ["Category C"],
+      "images": ["Image11.jpg", "Image12.jpg"]
+    },
+    {
+ 
+      "farmerId": "farmer234",
+      "quantity": 9,
+      "name": "Product 7",
+      "description": "This is product 7",
+      "price": 60,
+      "categories": ["Category B"],
+      "images": ["Image13.jpg", "Image14.jpg"]
+    },
+    {
+     
+      "farmerId": "farmer567",
+      "quantity": 4,
+      "name": "Product 8",
+      "description": "This is product 8",
+      "price": 150,
+      "categories": ["Category A", "Category C"],
+      "images": ["Image15.jpg", "Image16.jpg"]
+    },
+    {
+     
+      "farmerId": "farmer890",
+      "quantity": 7,
+      "name": "Product 9",
+      "description": "This is product 9",
+      "price": 110,
+      "categories": ["Category B"],
+      "images": ["Image17.jpg", "Image18.jpg"]
+    },
+    {
+    
+      "farmerId": "farmer123",
+      "quantity": 2,
+      "name": "Product 10",
+      "description": "This is product 10",
+      "price": 200,
+      "categories": ["Category A"],
+      "images": ["Image19.jpg", "Image20.jpg"]
+    }
+  ]
+  

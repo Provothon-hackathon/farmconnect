@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import farmconnect.farmconnect.beans.LoggedInUserBean;
 
+@RestController
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
-    
-  
+
     @Autowired
     private LoggedInUserBean loggedInUserBean;
-
 
     @GetMapping("/orders")
     @PreAuthorize("hasAuthority('USER')")
@@ -28,7 +28,11 @@ public class OrderController {
     @GetMapping("/orders/{orderId}")
     @PreAuthorize("hasAuthority('USER')")
     public Order getOrder(@RequestParam String orderId) {
-        return orderService.getUserOrder(loggedInUserBean.getUsername(), orderId);
+        try {
+            return orderService.getUserOrder(loggedInUserBean.getUsername(), orderId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @GetMapping("/admin/orders")
@@ -40,6 +44,11 @@ public class OrderController {
     @GetMapping("/admin/orders/{orderId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public Order getAdminOrder(@RequestParam String orderId) {
-        return orderService.getAdminOrder(loggedInUserBean.getUsername(), orderId);
+        try {
+            return orderService.getAdminOrder(loggedInUserBean.getUsername(), orderId);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 }
