@@ -21,7 +21,7 @@ const Order = () => {
                 Authorization:`Bearer ${loggedUser.token}`
               },      
             };
-            const {data}=await axios.get("api/chat",config);
+            const {data}=await axios.get("api/orders",config);
             setOrders(data);
           }catch(error){
             alert("Errorrr")
