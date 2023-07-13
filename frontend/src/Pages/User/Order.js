@@ -28,7 +28,7 @@ const Order = () => {
   }, [])
 
 
-  const getCart = async (user)=>{
+  const getCart = async (user) => {
 
     const config = {
       headers: {
@@ -51,13 +51,15 @@ const Order = () => {
     <>
       <Navbar searchBar={false} admin={false} />
       <div className='container mt-5'>
-        <OrderCard />
-        <OrderCard />
-        <OrderCard />
-        <OrderCard />
-        <OrderCard />
-        <OrderCard />
-        <OrderCard />
+
+        {order.length === 0 && <h1>No Order</h1>}
+        {order.length > 0 &&
+
+          order.map((o) => {
+            return <OrderCard key={o.id} order={o} />
+          })
+
+        }
 
       </div>
     </>

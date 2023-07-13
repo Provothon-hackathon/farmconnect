@@ -64,12 +64,12 @@ const Navbar = ({ searchBar, admin }) => {
                                     Orders
                                 </div>
                             </Link>
-                            <Link to="/profile" class="btn btn-primary">
+                            {/* <Link to="/profile" class="btn btn-primary">
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> account_circle </span>
                                     Profile
                                 </div>
-                            </Link>
+                            </Link> */}
                             <Link to="/cart" class="btn btn-primary">
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> shopping_cart </span>
