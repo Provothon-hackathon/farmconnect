@@ -68,7 +68,7 @@ public class UserController {
         return userService.addToCart(loggedInUserBean.getUsername(), id);
     }
 
-    @PostMapping("/remove-from-cart")
+    @GetMapping("/remove-from-cart")
     @PreAuthorize("hasAuthority('USER')")
     public String removeFromCart(@RequestParam String id) {
 
