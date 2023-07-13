@@ -96,10 +96,15 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody User user) {
 
-        userService.addUser(user);
-
-        // Return a success response after successful registration
-        return ResponseEntity.status(HttpStatus.OK).body("Registration successful");
+        try{
+            userService.addUser(user);
+            // Return a success response after successful registration
+            return ResponseEntity.status(HttpStatus.OK).body("Registration successful");
+        }
+        catch(Exception e){
+            // Return a failure response after unsuccessful registration
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Registration failed");
+        }
     }
 
 }
