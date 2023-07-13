@@ -3,23 +3,26 @@ import Navbar from '../../components/Navbar'
 import FarmerCard from '../../components/FarmerCard'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
-import { useEffect,useLocation } from 'react'
+import { useEffect, useLocation } from 'react'
 
 const UserHomePage = () => {
-  
+
   const history = useHistory()
-  const location = useLocation()
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    console.log(history.location.pathname)
+    console.log("MMM")
     if (userInfo) {
-      if (userInfo.role === "USER") {
+      if (userInfo.role === "USER" && history.location.pathname.includes('admin')) {
         history.push('/')
-      } else {
+      }
+
+      if (userInfo.role === "ADMIN" && !history.location.pathname.includes('admin')) {
         history.push('/admin')
       }
     }
-    }, [])
+  }, [])
 
 
   return (
