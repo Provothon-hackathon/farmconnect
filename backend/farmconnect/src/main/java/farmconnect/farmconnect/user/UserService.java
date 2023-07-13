@@ -50,6 +50,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(email).getId();
     }
 
+    public User getFarmer(String id) {
+        return userRepository.findById(id).get();
+    }
+
     public User addUser(User user) {
 
         if (userRepository.findByEmail(user.getEmail()) != null) {

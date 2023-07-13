@@ -54,16 +54,23 @@ public class UserController {
         // call api /products to get user profile
         return userService.getFarmers();
     }
+    @GetMapping("/farmers/{id}")
+    @PreAuthorize("hasAuthority('USER')")
+    public User getFarmer(@RequestParam String id) {
+
+        // call api /products to get user profile
+        return userService.getFarmer(id);
+    }
 
     @PostMapping("/add-to-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String addToCart(@RequestParam String id) {
+    public String addToCart(@RequestParam(value = "id") String id) {
         return userService.addToCart(loggedInUserBean.getUsername(), id);
     }
 
     @PostMapping("/remove-from-cart")
     @PreAuthorize("hasAuthority('USER')")
-    public String removeFromCart(@RequestParam String id) {
+    public String removeFromCart(@RequestParam(value = "id") String id) {
 
         return userService.removeFromCart(loggedInUserBean.getUsername(), id);
     }
@@ -83,13 +90,13 @@ public class UserController {
 
     @GetMapping("/inc-cart-qty")
     @PreAuthorize("hasAuthority('USER')")
-    public String incCartQty(@RequestParam String id) {
+    public String incCartQty(@RequestParam(value = "id") String id) {
         return userService.addToCart(loggedInUserBean.getUsername(), id);
     }
 
     @GetMapping("/dec-cart-qty")
     @PreAuthorize("hasAuthority('USER')")
-    public String decCartQty(@RequestParam String id) {
+    public String decCartQty(@RequestParam(value = "id") String id) {
         return userService.updateCart(loggedInUserBean.getUsername(), id);
     }
 

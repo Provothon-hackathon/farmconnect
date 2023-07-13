@@ -23,7 +23,7 @@ public class ProductService {
     private LoggedInUserBean loggedInUserBean;
 
     public List<Product> getProducts(String farmerId) {
-        return productRepository.findByFarmerId(farmerId);
+         return productRepository.findByFarmerId(farmerId);
     }
 
     public Page<Product> getPaginatedProducts(int page, int size) {

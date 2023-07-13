@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "products")
@@ -13,7 +12,6 @@ public class Product {
     @Id
     @Indexed(unique = true)
     private String id;
-    @DBRef(db = "users")
     private String farmerId;
     private int quantity;
     private String name;
