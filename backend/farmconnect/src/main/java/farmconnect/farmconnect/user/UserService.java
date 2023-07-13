@@ -49,7 +49,7 @@ public class UserService implements UserDetailsService {
     public User addUser(User user) {
 
         if (userRepository.findByEmail(user.getEmail()) != null) {
-            return null;
+            throw new RuntimeException("User already exists");
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
