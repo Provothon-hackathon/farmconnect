@@ -31,5 +31,5 @@ Our frontend will also start on localhost:3000 and we can access the app now.
 
 ## Screenshots
 
-![App Screenshot](https://ibb.co/pyny7nq)
+![App Screenshot](https://www.imghost.net/ib/fN24RK1tOZg8Rcy_1689321936.png)
 
