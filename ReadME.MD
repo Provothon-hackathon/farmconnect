@@ -30,6 +30,14 @@ Now head over to /frontend folder and type in npm start.
 Our frontend will also start on localhost:3000 and we can access the app now.
 
 ## Screenshots
-
+REGISTRATION/SIGNUP PAGE-
 ![App Screenshot](https://www.imghost.net/ib/fN24RK1tOZg8Rcy_1689321936.png)
 
+ADDING A NEW PRODUCT-FARMER SIDE
+![App Screenshot](https://www.imghost.net/ib/YXtTmyRxP3lHAdb_1689322030.png)
+
+UPDATING  A PRODUCT-FARMER SIDE-
+![App Screenshot](https://i.ibb.co/qJN3fj7/add-product.png)
+
+ALL PRODUCTS OF A FARMER- CONSUMER SIDE-
+![App Screenshot](https://www.imghost.net/ib/Py0UpsKOULA8QUu_1689322030.png)
