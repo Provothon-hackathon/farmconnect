@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const navstyle = {
@@ -9,10 +10,18 @@ const navstyle = {
 };
 
 const Navbar = ({ searchBar, admin }) => {
+
+    const history = useHistory()
+    const link = history.location.pathname.includes('admin')?'/admin':'/'
+    const handleLogout = ()=>{
+        localStorage.removeItem('userInfo')
+        history.push('\login')
+    }
+
     return (
         <nav className="navbar sticky-top navbar-expand-lg">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/" style={navstyle}>
+                <Link className="navbar-brand" to={link} style={navstyle}>
                     FarmConnect
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,19 +58,19 @@ const Navbar = ({ searchBar, admin }) => {
                     {admin === false &&
                         <div className="nav-btns">
 
-                            <a href="/orders" class="btn btn-primary">
+                            <Link to="/orders" class="btn btn-primary">
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> package </span>
                                     Orders
                                 </div>
-                            </a>
-                            <a href="/profile" class="btn btn-primary">
+                            </Link>
+                            {/* <Link to="/profile" class="btn btn-primary">
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> account_circle </span>
                                     Profile
                                 </div>
-                            </a>
-                            <a href="/cart" class="btn btn-primary">
+                            </Link> */}
+                            <Link to="/cart" class="btn btn-primary">
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> shopping_cart </span>
                                     Cart
@@ -69,20 +78,26 @@ const Navbar = ({ searchBar, admin }) => {
                                         class="badge rounded-pill"
                                     >3</span>
                                 </div>
-                            </a>
+                            </Link>
+                            <button  class="btn btn-danger" onClick={handleLogout}>
+                                <div class="cart-notif">
+                                    <span class="material-symbols-outlined"> logout </span>
+                                    Logout
+                                </div>
+                            </button>
                         </div>
                     }
 
                     {admin &&
                         <div className="nav-btns">
 
-                            <a href="/admin/add-product" class="btn btn-primary">
+                            <Link href="/admin/add-product" class="btn btn-primary">
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> add_circle </span>
                                     Add Product
                                 </div>
-                            </a>
-                            <a href="/admin/orders" class="btn btn-primary">
+                            </Link>
+                            <Link href="/admin/orders" class="btn btn-primary">
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> package </span>
                                     Orders
@@ -90,13 +105,13 @@ const Navbar = ({ searchBar, admin }) => {
                                         class="badge rounded-pill"
                                     >3</span>
                                 </div>
-                            </a>
-                            <a href="/logout" class="btn btn-danger">
+                            </Link>
+                            <button  class="btn btn-danger" onClick={handleLogout}>
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> logout </span>
                                     Logout
                                 </div>
-                            </a>
+                            </button>
                         </div>
                     }
 

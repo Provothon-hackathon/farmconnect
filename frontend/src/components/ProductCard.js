@@ -1,13 +1,59 @@
-import React from 'react';
+import React,{useState} from 'react';
+import axios from 'axios';
 
-const ProductCard = () => {
+const ProductCard = ({ product, user }) => {
+
+    const [loading, setLoading] = useState(false)
+
+    const handleAddToCart = async () => {
+
+        setLoading(true)
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        }
+        try {
+            const url = `/add-to-cart?id=${product.id}`
+            const { data } = await axios.post(url, {  }, config)
+            alert("Success")
+        } catch (error) {
+            alert('error')
+            console.log(error)
+        }finally{
+            setLoading(false)
+        }
+
+
+    }
+
+    const image = product.images.length > 0 ? product.images[0] : ''
     return (
-        <div className="card m-2" style={{ width: "18rem" }}>
-            <img src="https://plus.unsplash.com/premium_photo-1663051160162-e004fc97891e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=679&q=80" className="card-img-top" alt="..." />
+        <div className="card m-2 bg-light" style={{ width: "18rem" }}>
+            <img src={image} className="card-img-top" alt="..." />
             <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" className="btn btn-primary">Go somewhere</a>
+                <h5 className="card-title">{product.name}</h5>
+                <p className="card-text">
+                    <i>
+                        {product.description}
+                    </i>
+                </p>
+                <div>
+                    <span><b> Price </b></span>
+                    <span> 	&#8377;{product.price} </span>
+                </div>
+                <div>
+                    <span><b> Quantity </b></span>
+                    <span> 	 {product.quantity} </span>
+                </div>
+                <div>
+
+                    {product.categories.length > 0 && product.categories.map((cat,i) => {
+                        return <span key={i} className="badge rounded-pill m- px-3 py-2 text-bg-secondary">{cat}</span>
+
+                    })}
+                </div>
+                <button loading={loading} className="btn btn-warning" onClick={handleAddToCart} >Add To Cart</button>
             </div>
         </div>
     )

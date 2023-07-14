@@ -50,6 +50,10 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(email).getId();
     }
 
+    public User getFarmer(String id) {
+        return userRepository.findById(id).get();
+    }
+
     public User addUser(User user) {
 
         if (userRepository.findByEmail(user.getEmail()) != null) {
@@ -93,6 +97,11 @@ public class UserService implements UserDetailsService {
 
     public User saveUser(User user) {
         return userRepository.save(user);
+    }
+
+    public String getUserIdfromUsername(String username) {
+        User user = userRepository.findByEmail(username);
+        return user.getId();
     }
 
     public String addToCart(String email, String id) {

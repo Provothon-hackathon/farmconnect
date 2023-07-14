@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,6 +55,13 @@ public class UserController {
         // call api /products to get user profile
         return userService.getFarmers();
     }
+    @GetMapping("/farmers/{id}")
+    @PreAuthorize("hasAuthority('USER')")
+    public User getFarmer(@PathVariable String id) {
+
+        // call api /products to get user profile
+        return userService.getFarmer(id);
+    }
 
     @PostMapping("/add-to-cart")
     @PreAuthorize("hasAuthority('USER')")
@@ -61,7 +69,7 @@ public class UserController {
         return userService.addToCart(loggedInUserBean.getUsername(), id);
     }
 
-    @PostMapping("/remove-from-cart")
+    @GetMapping("/remove-from-cart")
     @PreAuthorize("hasAuthority('USER')")
     public String removeFromCart(@RequestParam String id) {
 

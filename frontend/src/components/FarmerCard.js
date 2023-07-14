@@ -14,7 +14,7 @@ const FarmerCard = ({ farmer }) => {
                     <li class="list-group-item text-white border-white" style={{ backgroundColor: "#047c0c" }} >An item</li>
                 </ul>
                 <div class="d-grid gap-2 col-6 mx-auto">
-                    <Link to={`/farmer/${farmer.id}`} state={{name:farmer.name,email:farmer.email}}>
+                    <Link to={`/farmer/${farmer.id}`} state={{ name: farmer.name, email: farmer.email }}>
                         <button type="button" class="btn btn-warning">View Shop</button>
                     </Link>
                 </div>
