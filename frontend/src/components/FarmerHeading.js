@@ -5,11 +5,7 @@ const FarmerHeading = ({farmer}) => {
 
   return (
     <div className="cart-heading" >
-      {/* <h2>Farmer Name : {farmer.name}</h2>
-      <h4>
-        Pending Orders :{farmer.orders && farmer.orders.length} 
-      </h4> */}
-
+      <h2 className='text-center w-100'> {farmer.name}</h2>
     </div>
   )
 }
