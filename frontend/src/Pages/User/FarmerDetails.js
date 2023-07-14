@@ -43,7 +43,7 @@ const FarmerDetails = () => {
     }
 
     try {
-      const url = `/farmer/${farmerId}`
+      const url = `/farmer-name-and-total-orders/${farmerId}`
       const { data } = await axios.get(url, config)
       console.log(data)
       setFarmer(data)

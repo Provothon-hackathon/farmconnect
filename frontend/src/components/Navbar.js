@@ -17,6 +17,7 @@ const Navbar = ({ searchBar, admin, cartSize }) => {
     const handleLogout = () => {
         localStorage.removeItem('userInfo')
         history.push('\login')
+        alert("loging out")
     }
 
     return (
@@ -75,9 +76,9 @@ const Navbar = ({ searchBar, admin, cartSize }) => {
                                 <div className="cart-notif">
                                     <span className="material-symbols-outlined"> shopping_cart </span>
                                     Cart
-                                    <span
+                                    {/* <span
                                         className="badge rounded-pill"
-                                    >3</span>
+                                    >3</span> */}
                                 </div>
                             </Link>
                             <button  class="btn btn-danger" onClick={handleLogout}>
