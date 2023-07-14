@@ -1,13 +1,13 @@
 import React from 'react'
 
-const FarmerHeading = ({}) => {
+const FarmerHeading = ({farmer}) => {
 
 
   return (
     <div className="cart-heading" >
-      <h2>Farmer Name</h2>
+      <h2>Farmer Name : {farmer.name}</h2>
       <h4>
-        Total Orders : 
+        Pending Orders :{farmer.orders && farmer.orders.length} 
       </h4>
 
     </div>

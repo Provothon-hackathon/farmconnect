@@ -132,7 +132,7 @@ const CheckoutCard = ({ cart, user, upadteCart }) => {
                             <h6
                                 className="card-title"
                                 style={{ display: "inline-block", color: "#38c400" }}
-                            > Rs 40</h6></span>
+                            > Rs {cart.product.price * cart.quantity}</h6></span>
                         <form
                             action="/remove-from-cart"
                             method="POST"

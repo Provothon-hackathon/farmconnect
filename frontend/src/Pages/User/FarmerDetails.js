@@ -36,21 +36,21 @@ const FarmerDetails = () => {
   }, [])
 
   const getFarmer = async (user) => {
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer ${user.token}`
-    //   }
-    // }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`
+      }
+    }
 
-    // try {
-    //   const url = `/farmers/${farmerId}`
-    //   const { data } = await axios.get(url, config)
-    //   console.log(data)
-    //   setFarmer(data)
-    // } catch (error) {
-    //   alert(error)
-    //   console.log(error)
-    // }
+    try {
+      const url = `/farmers/${farmerId}`
+      const { data } = await axios.get(url, config)
+      console.log(data)
+      setFarmer(data)
+    } catch (error) {
+      alert(error)
+      console.log(error)
+    }
   }
 
   const getProducts = async (user) => {

@@ -8,11 +8,13 @@ const navstyle = {
     color: 'white',
 };
 
-const Navbar = ({ searchBar, admin, cartSize}) => {
+const Navbar = ({ searchBar, admin, cartSize }) => {
 
     const history = useHistory()
-    const link = history.location.pathname.includes('admin')?'/admin':'/'
-    const handleLogout = ()=>{
+
+
+    const link = history.location.pathname.includes('admin') ? '/admin' : '/'
+    const handleLogout = () => {
         localStorage.removeItem('userInfo')
         history.push('\login')
     }
@@ -78,7 +80,7 @@ const Navbar = ({ searchBar, admin, cartSize}) => {
                                     >{cartSize}</span>
                                 </div>
                             </Link>
-                            <button  class="btn btn-danger" onClick={handleLogout}>
+                            <button class="btn btn-danger" onClick={handleLogout}>
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> logout </span>
                                     Logout
@@ -105,7 +107,7 @@ const Navbar = ({ searchBar, admin, cartSize}) => {
                                     >{cartSize}</span>
                                 </div>
                             </Link>
-                            <button  class="btn btn-danger" onClick={handleLogout}>
+                            <button class="btn btn-danger" onClick={handleLogout}>
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> logout </span>
                                     Logout

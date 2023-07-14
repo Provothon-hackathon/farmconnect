@@ -9,11 +9,10 @@ const UserHomePage = () => {
 
   const history = useHistory()
   const [farmer, setFarmer] = useState([])
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    console.log(history.location.pathname)
-    console.log("MMM")
     if (userInfo) {
       if (userInfo.role === "USER" && history.location.pathname.includes('admin')) {
         history.push('/')
@@ -22,6 +21,7 @@ const UserHomePage = () => {
       if (userInfo.role === "ADMIN" && !history.location.pathname.includes('admin')) {
         history.push('/admin')
       }
+      setUser(userInfo)
       getFarmers(userInfo)
     } else {
       history.push('/login')
@@ -63,7 +63,7 @@ const UserHomePage = () => {
         {farmer.length>0 &&
         
           farmer.map((f)=>{
-            return <FarmerCard key={f.id} farmer={f} />
+            return <FarmerCard key={f.id} farmer={f} user={user} />
           })
         }
 

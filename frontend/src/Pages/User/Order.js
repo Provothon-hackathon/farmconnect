@@ -11,7 +11,6 @@ const Order = () => {
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    console.log(history.location.pathname)
     if (userInfo) {
       if (userInfo.role === "USER" && history.location.pathname.includes('admin')) {
         history.push('/')
@@ -38,7 +37,6 @@ const Order = () => {
 
     try {
       const { data } = await axios.get('/orders', config)
-      console.log(data)
       setOrder(data)
     } catch (error) {
       alert('error')
