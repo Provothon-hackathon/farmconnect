@@ -1,8 +1,7 @@
-import React from 'react'
-import Navbar from '../../components/Navbar'
-import FarmerCard from '../../components/FarmerCard'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { useEffect,useState } from 'react'
+import FarmerCard from '../../components/FarmerCard'
+import Navbar from '../../components/Navbar'
 
 import axios from 'axios'
 
@@ -57,7 +56,7 @@ const UserHomePage = () => {
   return (
     <>
       <Navbar searchBar={true} admin={false} />
-      <div className="container d-flex justify-content-center align-items-center flex-wrap mt-5 py-5">
+      <div className="container d-flex justify-content-start align-items-center flex-wrap mt-5 ">
 
         {farmer.length===0 && <h1>No Farmer</h1>}
 

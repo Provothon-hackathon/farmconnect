@@ -19,4 +19,5 @@ public interface ProductRepository extends MongoRepository<Product, String> {
     Product deleteByIdAndFarmerId(String id, String farmerId);
 
     List<Product>  findByName(String name);
+
 }

@@ -2,10 +2,11 @@ import React from 'react'
 import Navbar from '../../components/Navbar'
 import ProductCard from '../../components/ProductCard'
 
-import { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import FarmerHeading from '../../components/FarmerHeading'
 
 const FarmerDetails = () => {
 
@@ -76,7 +77,8 @@ const FarmerDetails = () => {
   return (
     <>
       <Navbar searchBar={true} admin={false} />
-
+      <FarmerHeading farmer={farmer} />
+{/* 
       <div className='container mt-5  d-flex justify-content-center align-items-center'>
 
         <div className="card">
@@ -90,9 +92,9 @@ const FarmerDetails = () => {
             </blockquote>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="container d-flex justify-content-center align-items-center flex-wrap mt-5">
+      <div className="container d-flex justify-content-start align-items-center flex-wrap mt-5">
         {products.length === 0 && <h1>No Product</h1>}
         {products.length > 0 &&
 
