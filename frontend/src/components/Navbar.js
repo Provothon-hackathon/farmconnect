@@ -31,7 +31,7 @@ const Navbar = ({ searchBar, admin, cartSize }) => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
                     {
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li>
                                 <form
                                     className={searchBar ? 'd-flex' : 'd-none'}
@@ -41,13 +41,13 @@ const Navbar = ({ searchBar, admin, cartSize }) => {
 
                                 >
                                     <input
-                                        class="form-control me-2"
+                                        className="form-control me-2"
                                         type="search"
                                         placeholder="Search"
                                         aria-label="Search"
                                         name="query"
                                     />
-                                    <button class="btn search-btn btn-outline-success" type="submit">
+                                    <button className="btn search-btn btn-outline-success" type="submit">
                                         Search
                                     </button>
                                 </form>
@@ -59,28 +59,28 @@ const Navbar = ({ searchBar, admin, cartSize }) => {
                     {admin === false &&
                         <div className="nav-btns">
 
-                            <Link to="/orders" class="btn btn-primary">
-                                <div class="cart-notif">
-                                    <span class="material-symbols-outlined"> package </span>
+                            <Link to="/orders" className="btn btn-primary">
+                                <div className="cart-notif">
+                                    <span className="material-symbols-outlined"> package </span>
                                     Orders
                                 </div>
                             </Link>
-                            {/* <Link to="/profile" class="btn btn-primary">
-                                <div class="cart-notif">
-                                    <span class="material-symbols-outlined"> account_circle </span>
+                            {/* <Link to="/profile" className="btn btn-primary">
+                                <div className="cart-notif">
+                                    <span className="material-symbols-outlined"> account_circle </span>
                                     Profile
                                 </div>
                             </Link> */}
-                            <Link to="/cart" class="btn btn-primary">
-                                <div class="cart-notif">
-                                    <span class="material-symbols-outlined"> shopping_cart </span>
+                            <Link to="/cart" className="btn btn-primary">
+                                <div className="cart-notif">
+                                    <span className="material-symbols-outlined"> shopping_cart </span>
                                     Cart
                                     <span
-                                        class="badge rounded-pill"
-                                    >{cartSize}</span>
+                                        className="badge rounded-pill"
+                                    >3</span>
                                 </div>
                             </Link>
-                            <button class="btn btn-danger" onClick={handleLogout}>
+                            <button  class="btn btn-danger" onClick={handleLogout}>
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> logout </span>
                                     Logout
@@ -92,22 +92,22 @@ const Navbar = ({ searchBar, admin, cartSize }) => {
                     {admin &&
                         <div className="nav-btns">
 
-                            <Link href="/admin/add-product" class="btn btn-primary">
-                                <div class="cart-notif">
-                                    <span class="material-symbols-outlined"> add_circle </span>
+                            <Link href="/admin/add-product" className="btn btn-primary">
+                                <div className="cart-notif">
+                                    <span className="material-symbols-outlined"> add_circle </span>
                                     Add Product
                                 </div>
                             </Link>
-                            <Link href="/admin/orders" class="btn btn-primary">
-                                <div class="cart-notif">
-                                    <span class="material-symbols-outlined"> package </span>
+                            <Link href="/admin/orders" className="btn btn-primary">
+                                <div className="cart-notif">
+                                    <span className="material-symbols-outlined"> package </span>
                                     Orders
                                     <span
-                                        class="badge rounded-pill"
-                                    >{cartSize}</span>
+                                        className="badge rounded-pill"
+                                    >3</span>
                                 </div>
                             </Link>
-                            <button class="btn btn-danger" onClick={handleLogout}>
+                            <button  class="btn btn-danger" onClick={handleLogout}>
                                 <div class="cart-notif">
                                     <span class="material-symbols-outlined"> logout </span>
                                     Logout

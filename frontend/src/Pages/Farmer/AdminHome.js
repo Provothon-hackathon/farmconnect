@@ -1,12 +1,16 @@
 import React from 'react'
 import Navbar from '../../components/Navbar'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+
+import axios from 'axios'
 
 const AdminHome = () => {
 
     const history = useHistory()
+    const [products, setProducts] = useState([])
+
 
 
     useEffect(() => {
@@ -21,8 +25,26 @@ const AdminHome = () => {
             if (userInfo.role === "ADMIN" && !history.location.pathname.includes('admin')) {
                 history.push('/admin')
             }
+            fetchProducts(userInfo)
         }
     }, [])
+
+    const fetchProducts = async (user)=> {
+        const config = {
+            headers: {
+              Authorization: `Bearer ${user.token}`
+            }
+          }
+      
+          try {
+            const { data } = await axios.get('/admin/products', config)
+            setProducts(data)
+            console.log(data)
+          } catch (error) {
+            alert('error')
+            console.log(error)
+          }
+    }
 
     return (
         <>
@@ -96,6 +118,28 @@ const AdminHome = () => {
 
                             </td>
                         </tr>
+                        {products.length>0 && 
+                            products.map((p) => {
+                                return (
+                                <>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{p.name}</td>
+                                    <td>{p.quantity}</td>
+                                    <td>{p.price}</td>
+                                    <td>
+                                        <Link to={`/admin/update-product/${p.id}`}>
+                                            <button type="button" class="btn btn-warning">
+                                                Update
+                                            </button>
+                                        </Link>
+
+                                    </td>
+                                </tr>
+                                </>)
+                            })
+
+                        }
                     </tbody>
                 </table>
 
