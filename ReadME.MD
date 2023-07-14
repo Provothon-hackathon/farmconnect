@@ -2,7 +2,8 @@
 # Project Title
 
 Welcome to FarmConnect- A web-based platform for connecting local farmers with consumers, promoting direct and sustainable food sourcing. 
-
+PROPOSAL LINK-
+PPT LINK AS DEMO-https://drive.google.com/file/d/13Ds9sGkN9gOHqhn3quIYJeyAet4KUlam/view?usp=sharing
 ## Installation
 
 To install this project first of all clone the repository.
@@ -39,5 +40,18 @@ ADDING A NEW PRODUCT-FARMER SIDE
 UPDATING  A PRODUCT-FARMER SIDE-
 ![App Screenshot](https://i.ibb.co/qJN3fj7/add-product.png)
 
+PRODUCT LIST-FARMER ADMIN SIDE
+https://www.imghost.net/ib/RC0zbZTWGc5O0yq_1689322271.png
+
+
 ALL PRODUCTS OF A FARMER- CONSUMER SIDE-
 ![App Screenshot](https://www.imghost.net/ib/Py0UpsKOULA8QUu_1689322030.png)
+
+CART-CONSUMER SIDE
+![App Screenshot](https://www.imghost.net/ib/FoGspdBzMqUpjkC_1689322363.png)
+
+ORDER DETAILS- CONSUMER SIDE
+![App Screenshot](https://www.imghost.net/ib/W6Xw6Pe3zXDL0Jn_1689322500.png)
+
+
+
