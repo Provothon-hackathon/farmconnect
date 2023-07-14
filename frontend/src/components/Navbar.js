@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const navstyle = {
@@ -9,7 +8,7 @@ const navstyle = {
     color: 'white',
 };
 
-const Navbar = ({ searchBar, admin }) => {
+const Navbar = ({ searchBar, admin, cartSize}) => {
 
     const history = useHistory()
     const link = history.location.pathname.includes('admin')?'/admin':'/'

@@ -252,6 +252,21 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(username);
         return user.getRole();
     }
+
+
+    public List<User> searchFarmersWithItem(String itemName) {
+        
+        List<Product> products = productService.getProductsByName(itemName);
+        List<User> farmers = new ArrayList<>();
+
+        for(Product p: products){
+            String farmerId = p.getFarmerId();
+            User farmer = userRepository.findById(farmerId).get();
+            farmers.add(farmer);
+        }
+
+        return farmers;
+    }
   
 
     @Override
