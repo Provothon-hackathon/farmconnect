@@ -5,10 +5,10 @@ const FarmerHeading = ({farmer}) => {
 
   return (
     <div className="cart-heading" >
-      <h2>Farmer Name : {farmer.name}</h2>
+      {/* <h2>Farmer Name : {farmer.name}</h2>
       <h4>
         Pending Orders :{farmer.orders && farmer.orders.length} 
-      </h4>
+      </h4> */}
 
     </div>
   )
