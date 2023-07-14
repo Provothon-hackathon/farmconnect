@@ -3,7 +3,9 @@ package farmconnect.farmconnect.user;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -268,6 +270,17 @@ public class UserService implements UserDetailsService {
         return farmers;
     }
   
+   public Map<String, Object> getFarmerNameAndTotalOrders(String farmerId){
+        String name = userRepository.findById(farmerId).get().getName();
+        List<Order> orders = orderService.getAdminOrders(farmerId);
+        int totalOrders = orders.size();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        map.put("totalOrders", totalOrders);
+
+        return map;
+   }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -40,6 +40,17 @@ public class UserController {
 
     }
 
+    @GetMapping("/farmer-name-and-total-orders/{farmerId}")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<Object> getFarmerNameAndTotalOrders(@PathVariable String farmerId) {
+
+        // call api /products to get user profile
+        Map<String,Object> mp = userService.getFarmerNameAndTotalOrders(farmerId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(mp);
+
+    }
+
     @PostMapping("/profile")
     @PreAuthorize("hasAuthority('USER')")
     public User updateProfile(@RequestParam String email, @RequestParam String name, @RequestParam String address) {
