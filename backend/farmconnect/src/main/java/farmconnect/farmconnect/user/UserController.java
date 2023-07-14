@@ -123,4 +123,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/search")
+    @PreAuthorize("hasAuthority('USER')")
+    public List<User> search(@RequestParam String item) {
+
+        return userService.searchFarmersWithItem(item);
+    }
+
 }

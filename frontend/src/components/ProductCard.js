@@ -1,5 +1,5 @@
-import React,{useState} from 'react';
 import axios from 'axios';
+import React, { useState } from 'react';
 
 const ProductCard = ({ product, user }) => {
 
@@ -30,7 +30,7 @@ const ProductCard = ({ product, user }) => {
     const image = product.images.length > 0 ? product.images[0] : ''
     return (
         <div className="card m-2 bg-light" style={{ width: "18rem" }}>
-            <img src={image} className="card-img-top" alt="..." />
+            <img src={image} className="card-img-top" style={{height:"12rem"}} alt="..." />
             <div className="card-body">
                 <h5 className="card-title">{product.name}</h5>
                 <p className="card-text">
@@ -39,12 +39,7 @@ const ProductCard = ({ product, user }) => {
                     </i>
                 </p>
                 <div>
-                    <span><b> Price </b></span>
-                    <span> 	&#8377;{product.price} </span>
-                </div>
-                <div>
-                    <span><b> Quantity </b></span>
-                    <span> 	 {product.quantity} </span>
+                    <h2 style={{color:"#229b00"}}> 	&#8377;{product.price} </h2>
                 </div>
                 <div>
 
@@ -53,7 +48,7 @@ const ProductCard = ({ product, user }) => {
 
                     })}
                 </div>
-                <button loading={loading} className="btn btn-warning" onClick={handleAddToCart} >Add To Cart</button>
+                <button loading={loading} className="btn" disabled={product.quantity <= 0}  style={{width:"100%" ,background:"#6400b1",color:"#fff"}}  onClick={handleAddToCart} >{product.quantity > 0 ? "Add To Cart" : "Out of Stock"}</button>
             </div>
         </div>
     )

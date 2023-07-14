@@ -69,7 +69,7 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar searchBar={false} admin={false} />
+      <Navbar searchBar={false} admin={false} cartSize={cart.length} />
       {cart &&
         <CartHeading user={user} total={cart.total} />
       }
