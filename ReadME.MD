@@ -2,7 +2,8 @@
 # Project Title
 
 Welcome to FarmConnect- A web-based platform for connecting local farmers with consumers, promoting direct and sustainable food sourcing. 
-PROPOSAL LINK-
+PROPOSAL LINK-https://drive.google.com/file/d/1pl9LsTyn-EJC3S5cB3G_JUEF5Wjc8bAk/view?usp=sharing
+
 PPT LINK AS DEMO-https://drive.google.com/file/d/13Ds9sGkN9gOHqhn3quIYJeyAet4KUlam/view?usp=sharing
 ## Installation
 
